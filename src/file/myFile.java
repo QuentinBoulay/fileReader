@@ -2,58 +2,55 @@ package file;
 
 import interfaces.ActionsFileReader;
 
-import java.io.FileInputStream;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 
 public abstract class myFile implements ActionsFileReader {
     private String pathFile;
-    private char[] buffer;
+    private BufferedReader br;
+    private StringBuffer buffer;
+    private FileReader fr;
 
-    public myFile(String pathFile) {
+    public myFile(String pathFile) throws FileNotFoundException {
+
         this.pathFile = pathFile;
-        this.buffer = new char[100];
+        this.fr = new FileReader(this.pathFile);
+        this.br = new BufferedReader(this.fr);
+        this.buffer = new StringBuffer();
+
     }
 
     public String getPathFile() {
         return this.pathFile;
     }
 
-    public String[] getBuffer() {
-        String[] bufferString = new String[this.buffer.length];
-        return bufferString;
+ public StringBuffer getBuffer() {
+        return this.buffer;
     }
 
-    public abstract void normalRead();
-    public abstract void reverseRead();
+    public FileReader getFr() {
+        return this.fr;
+    }
+    public BufferedReader getBr() {
+        return this.br;
+    }
+
+    public abstract void normalRead() throws IOException;
+    public abstract void reverseRead() throws IOException;
     public abstract void palindromRead();
 
     @Override
-    public void openFile() {
-        try {
-            FileInputStream in = new FileInputStream(this.pathFile);
+    public void openFile() throws IOException {
+        this.fr = new FileReader(this.pathFile);
+    }
 
-            int i = in.read();
+    @Override
+    public void closeFile() throws IOException {
+        this.fr.close();
 
-            while (i != -1) {
-                int j = 0;
-                System.out.println((char) i);
-                i = in.read();
-                // stocker chaque caractère dans le buffer :
-                this.buffer[j] = (char) i;
-                j++;
-
-            }
-
-            // afficher mon buffer avec tout le texte de mon fichier, sans les sauts de ligne :
-            System.out.println(this.buffer);
-
-
-
-
-            in.close();
-
-        } catch (Exception e){
-            e.getStackTrace();
-        }
     }
 }
