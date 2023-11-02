@@ -64,6 +64,36 @@ public class CSV extends myFile {
 
     @Override
     public String compareFile(myFile fileCSV2) throws IOException {
-        return null;
+        String line = "";
+        final String delimiter = ";";
+        try {
+            while ((line = fileCSV2.getBr().readLine()) != null)
+            {
+                String[] token = line.split(delimiter);
+                for (String s : token) {
+                    ;
+                    fileCSV2.getBuffer().append(s+" ");
+                }
+                fileCSV2.getBuffer().append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        StringBuffer buffer2 = fileCSV2.getBuffer();
+        StringBuffer buffer1 = getBuffer();
+
+        String[] lines1 = buffer1.toString().split("\n");
+        String[] lines2 = buffer2.toString().split("\n");
+
+
+        String result = "";
+        for (int j = 0; j < lines1.length; j++) {
+            if (lines1[j].equals(lines2[j])) {
+                result += "Ligne " + (j + 1) + " : OK\n";
+            } else {
+                result += "Ligne " + (j + 1) + " : KO\n";
+            }
+        }
+        return result;
     }
 }

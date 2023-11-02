@@ -24,6 +24,7 @@ public class Main {
         System.out.println("==============================");
         System.out.println("==============================");
         CSV fileCSV = new CSV("C:/Users/xb637/Documents/GitHub/fileReader/src/fichier.csv");
+        CSV fileCSV2 = new CSV("C:/Users/xb637/Documents/GitHub/fileReader/src/fichier2.csv");
         fileCSV.openFile();
         System.out.println("Fichier CSV écris normalement");
         fileCSV.normalRead();
@@ -38,8 +39,13 @@ public class Main {
         System.out.println("==============================");
         System.out.println("==============================");
         System.out.println("==============================");
-        System.out.println("Comparaison des deux fichiers");
+        System.out.println("Comparaison des deux fichiers txt");
         System.out.println(fileText.compareFile(fileText2));
+        System.out.println("==============================");
+        System.out.println("==============================");
+        System.out.println("==============================");
+        System.out.println("Comparaison des deux fichiers csv");
+        System.out.println(fileCSV.compareFile(fileCSV2));
 
 
 
