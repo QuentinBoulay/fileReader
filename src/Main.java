@@ -6,7 +6,8 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        Txt fileText = new Txt("C:/Users/quent/Documents/GitHub/fileReader/src/fichier.txt");
+        Txt fileText = new Txt("C:/Users/xb637/Documents/GitHub/fileReader/src/fichier.txt");
+        Txt fileText2 = new Txt("C:/Users/xb637/Documents/GitHub/fileReader/src/fichier2.txt");
         fileText.openFile();
         System.out.println("Texte écris normalement");
         fileText.normalRead();
@@ -22,7 +23,7 @@ public class Main {
         System.out.println("==============================");
         System.out.println("==============================");
         System.out.println("==============================");
-        CSV fileCSV = new CSV("C:/Users/quent/Documents/GitHub/fileReader/src/fichier.csv");
+        CSV fileCSV = new CSV("C:/Users/xb637/Documents/GitHub/fileReader/src/fichier.csv");
         fileCSV.openFile();
         System.out.println("Fichier CSV écris normalement");
         fileCSV.normalRead();
@@ -34,6 +35,11 @@ public class Main {
         System.out.println("==============================");
         System.out.println("Fichier CSV écris en palindrome");
         fileCSV.palindromRead();
+        System.out.println("==============================");
+        System.out.println("==============================");
+        System.out.println("==============================");
+        System.out.println("Comparaison des deux fichiers");
+        System.out.println(fileText.compareFile(fileText2));
 
 
 

@@ -15,7 +15,6 @@ public class Txt extends myFile {
             this.getBuffer().append((char) i);
         }
         StringBuffer buffer = getBuffer();
-        System.out.println(buffer);
     }
 
     @Override
@@ -23,12 +22,12 @@ public class Txt extends myFile {
         StringBuffer buffer = getBuffer();
         String[] lines = buffer.toString().split("\n");
         for (int i = lines.length - 1; i >= 0; i--) {
-             System.out.println(lines[i]);
+            System.out.println(lines[i]);
         }
     }
 
     @Override
-    public void palindromRead() {
+    public void palindromRead() throws IOException {
         // Divise le contenu en lignes en utilisant le caractère de saut de ligne '\n'
         String[] lines = this.getBuffer().toString().split("\n");
 
@@ -48,5 +47,29 @@ public class Txt extends myFile {
             // Affiche la ligne inversée
             System.out.println(reversedLine.toString());
         }
+    }
+
+    @Override
+    public String compareFile(myFile fileText2) throws IOException {
+        int i;
+        while ((i = fileText2.getFr().read()) != -1) {
+            fileText2.getBuffer().append((char) i);
+        }
+        StringBuffer buffer2 = fileText2.getBuffer();
+        StringBuffer buffer1 = getBuffer();
+
+        String[] lines1 = buffer1.toString().split("\n");
+        String[] lines2 = buffer2.toString().split("\n");
+        String result = "";
+
+        for (int j = 0; j < lines1.length; j++) {
+            if (lines1[j].equals(lines2[j])) {
+                result += "Ligne " + (j + 1) + " : OK\n";
+            } else {
+                result += "Ligne " + (j + 1) + " : KO\n";
+            }
+        }
+        return result;
+
     }
 }

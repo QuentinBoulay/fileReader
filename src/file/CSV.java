@@ -61,4 +61,9 @@ public class CSV extends myFile {
             System.out.println(reversedLine.toString());
         }
     }
+
+    @Override
+    public String compareFile(myFile fileCSV2) throws IOException {
+        return null;
+    }
 }

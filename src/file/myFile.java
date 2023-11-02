@@ -41,7 +41,10 @@ public abstract class myFile implements ActionsFileReader {
 
     public abstract void normalRead() throws IOException;
     public abstract void reverseRead() throws IOException;
-    public abstract void palindromRead();
+    public abstract void palindromRead() throws IOException;
+
+    public abstract String compareFile(myFile fileText2) throws IOException;
+
 
     @Override
     public void openFile() throws IOException {
@@ -53,4 +56,5 @@ public abstract class myFile implements ActionsFileReader {
         this.fr.close();
 
     }
+
 }
