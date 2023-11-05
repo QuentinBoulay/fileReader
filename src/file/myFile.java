@@ -39,7 +39,16 @@ public abstract class myFile implements ActionsFileReader {
         return this.br;
     }
 
+    public void reloadFile() throws IOException {
+        this.getBuffer().setLength(0); // Réinitialise le contenu du buffer
+        this.openFile(); // Réouvre le fichier
+        this.normalRead(); // Relit le contenu du fichier dans le buffer
+    }
+
     public abstract void normalRead() throws IOException;
+
+    public abstract void displayFile() throws IOException;
+
     public abstract void reverseRead() throws IOException;
     public abstract void palindromRead() throws IOException;
 
@@ -48,8 +57,13 @@ public abstract class myFile implements ActionsFileReader {
 
     @Override
     public void openFile() throws IOException {
+        if (this.fr != null) {
+            this.fr.close();
+        }
         this.fr = new FileReader(this.pathFile);
+        this.br = new BufferedReader(this.fr);
     }
+
 
     @Override
     public void closeFile() throws IOException {

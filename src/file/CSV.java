@@ -24,63 +24,60 @@ public class CSV extends myFile {
                 }
                 this.getBuffer().append("\n");
             }
-            System.out.println(this.getBuffer());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
+    public void displayFile() throws IOException {
+        System.out.println(this.getBuffer());
+    }
+
+    @Override
     public void reverseRead() throws IOException {
-        StringBuffer buffer = getBuffer();
+        StringBuffer buffer = new StringBuffer(this.getBuffer().toString());
+        this.getBuffer().setLength(0); // Réinitialise le contenu du buffer
         String[] lines = buffer.toString().split("\n");
         for (int i = lines.length - 1; i >= 0; i--) {
-            System.out.println(lines[i]);
+            this.getBuffer().append(lines[i]);
+            if (i > 0) {
+                this.getBuffer().append("\n");
+            }
         }
     }
 
     @Override
     public void palindromRead() {
+        StringBuffer buffer = new StringBuffer(this.getBuffer().toString());
+        this.getBuffer().setLength(0); // Réinitialise le contenu du buffer
+
         // Divise le contenu en lignes en utilisant le caractère de saut de ligne '\n'
-        String[] lines = this.getBuffer().toString().split("\n");
+        String[] lines = buffer.toString().split("\n");
 
         // Parcours de chaque ligne
         for (int i = 0; i < lines.length; i++) {
             // Convertit la ligne actuelle en un tableau de caractères (lettres)
             char[] lineChars = lines[i].toCharArray();
 
-            // Crée un StringBuilder pour stocker la ligne inversée
-            StringBuilder reversedLine = new StringBuilder();
-
-            // Parcours de la ligne dans l'ordre inverse (inversion des lettres)
+            // Parcours de la ligne dans l'ordre inverse (inversion des lettres mais pas des lignes)
             for (int j = lineChars.length - 1; j >= 0; j--) {
-                reversedLine.append(lineChars[j]);
+                this.getBuffer().append(lineChars[j]);
             }
-
-            // Affiche la ligne inversée
-            System.out.println(reversedLine.toString());
+            if (i < lines.length - 1) {
+                this.getBuffer().append("\n");
+            }
         }
     }
 
+
     @Override
     public String compareFile(myFile fileCSV2) throws IOException {
-        String line = "";
-        final String delimiter = ";";
-        try {
-            while ((line = fileCSV2.getBr().readLine()) != null)
-            {
-                String[] token = line.split(delimiter);
-                for (String s : token) {
-                    ;
-                    fileCSV2.getBuffer().append(s+" ");
-                }
-                fileCSV2.getBuffer().append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.reloadFile();
+
+        fileCSV2.normalRead();
+        StringBuffer buffer1 = this.getBuffer();
         StringBuffer buffer2 = fileCSV2.getBuffer();
-        StringBuffer buffer1 = getBuffer();
 
         String[] lines1 = buffer1.toString().split("\n");
         String[] lines2 = buffer2.toString().split("\n");

@@ -14,49 +14,51 @@ public class Txt extends myFile {
         while ((i = this.getFr().read()) != -1) {
             this.getBuffer().append((char) i);
         }
-        StringBuffer buffer = getBuffer();
+    }
+
+    @Override
+    public void displayFile() throws IOException {
+        System.out.println(this.getBuffer());
     }
 
     @Override
     public void reverseRead() {
-        StringBuffer buffer = getBuffer();
+        StringBuffer buffer = new StringBuffer(this.getBuffer().toString());
+        this.getBuffer().setLength(0); // Réinitialise le contenu du buffer
         String[] lines = buffer.toString().split("\n");
         for (int i = lines.length - 1; i >= 0; i--) {
-            System.out.println(lines[i]);
+            this.getBuffer().append(lines[i]);
+            if (i > 0) {
+                this.getBuffer().append("\n");
+            }
         }
     }
 
     @Override
-    public void palindromRead() throws IOException {
-        // Divise le contenu en lignes en utilisant le caractère de saut de ligne '\n'
+    public void palindromRead() {
+        StringBuffer newBuffer = new StringBuffer(); // Utilisez un nouveau StringBuffer pour le palindrome
         String[] lines = this.getBuffer().toString().split("\n");
 
-        // Parcours de chaque ligne
-        for (int i = 0; i < lines.length; i++) {
-            // Convertit la ligne actuelle en un tableau de caractères (lettres)
-            char[] lineChars = lines[i].toCharArray();
-
-            // Crée un StringBuilder pour stocker la ligne inversée
-            StringBuilder reversedLine = new StringBuilder();
-
-            // Parcours de la ligne dans l'ordre inverse (inversion des lettres)
-            for (int j = lineChars.length - 1; j >= 0; j--) {
-                reversedLine.append(lineChars[j]);
-            }
-
-            // Affiche la ligne inversée
-            System.out.println(reversedLine.toString());
+        for (String line : lines) {
+            // Inverse chaque ligne individuellement sans changer l'ordre des lignes
+            String reversedLine = new StringBuilder(line).reverse().toString();
+            newBuffer.append(reversedLine);
+            newBuffer.append("\n"); // Ajoute un saut de ligne après chaque ligne inversée
         }
+
+        this.getBuffer().setLength(0); // Réinitialise le contenu du buffer
+        this.getBuffer().append(newBuffer); // Ajoute le contenu inversé au buffer
     }
+
+
+
 
     @Override
     public String compareFile(myFile fileText2) throws IOException {
-        int i;
-        while ((i = fileText2.getFr().read()) != -1) {
-            fileText2.getBuffer().append((char) i);
-        }
+        this.reloadFile();
+        fileText2.normalRead();
+        StringBuffer buffer1 = this.getBuffer();
         StringBuffer buffer2 = fileText2.getBuffer();
-        StringBuffer buffer1 = getBuffer();
 
         String[] lines1 = buffer1.toString().split("\n");
         String[] lines2 = buffer2.toString().split("\n");
